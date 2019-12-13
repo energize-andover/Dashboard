@@ -1,0 +1,22 @@
+/********************GENERAL********************/
+body {
+    margin: 0;
+}
+
+a {
+    transition: 0.5s color;
+}
+
+.colored-button {
+    border-color: #51a517;
+    border-width: 2px;
+    background-color: #51a517;
+    color: white;
+    border-radius: 10px;
+    max-width: 100%;
+}
+
+.colored-button:hover {
+    background-color: rgba(0, 0, 0, 0);
+    color: #51a517;
+}

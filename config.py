@@ -1,0 +1,1 @@
+COLOR_TRANSITION = '0.5s'

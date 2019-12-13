@@ -1,0 +1,34 @@
+{% from 'macros.html' import head, importJS %}
+
+{{ head('Configure', extra_css_imports=['/static/css/configure.css'], use_navigation_css=False) }}
+
+<body>
+<main>
+    <div class="container has-text-centered" id="config-menu">
+        <h1 class="title is-size-3-mobile is-size-1">Dashboard Configuration</h1>
+        <h2 class="subtitle is-size-5-mobile is-size-3">What would you like to configure?</h2>
+
+        <div class="columns buttons are-medium" id="config-button-container">
+            {% set button_urls=['layout', 'widgets'] %}
+            {% set button_texts=['Dashboard Layout', 'Dashboard Widgets'] %}
+            {% set button_icons=['fa-th', 'fa-chart-bar'] %}
+
+            {% for button_text in button_texts %}
+                <div class="column config-button-column">
+                    <a href="/configure/{{ button_urls[loop.index0] }}" style="display: block; width: 100%">
+                        <button class="button colored-button" style="transition: {{ transition_color }} all;">
+                            <i class="fas {{ button_icons[loop.index0] }}"></i>{{ button_text }}
+                        </button>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+
+        <br>
+
+        <h6 class="is-size-6-mobile is-size-5"><a href="/" title="Return to dashboard">Return to your dashboard</a></h6>
+    </div>
+</main>
+{{ importJS() }}
+<script type="text/javascript" src="/static/js/configure.js"></script>
+</body>

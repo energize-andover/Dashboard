@@ -1,0 +1,12 @@
+#nav-logo:hover {
+    background-color: #fafafa;
+    opacity: 0.75;
+}
+
+.navbar-item {
+    transition: all 0.5s;
+}
+
+.navbar-item i {
+    padding-left: 4px;
+}

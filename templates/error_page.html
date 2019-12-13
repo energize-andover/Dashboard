@@ -1,0 +1,19 @@
+{% from 'macros.html' import head, importJS %}
+
+{{ head('Error ' + code|string + '!', extra_css_imports=['/static/css/error_page.css'], use_navigation_css=False) }}
+
+<body>
+<main class="has-text-centered">
+    <div style="position: fixed; top: 50%; transform: translateY(-50%);left: 0; right: 0;">
+        <div class="error-page">
+            <div>
+                <h1 data-h1="{{ code|upper }}">{{ code|upper }}</h1>
+                <p data-p="{{ reason }}"> {{ reason }}</p>
+            </div>
+        </div>
+        <div id="particles-js"></div>
+    </div>
+    <a href="/" class="subtitle is-size-4 is-size-5-mobile">Return to dashboard?</a>
+</main>
+{{ importJS(particles=True) }}
+</body>
