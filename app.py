@@ -33,5 +33,10 @@ def configure_home():
     return render_template('configure_home.html')
 
 
+@app.route('/configure/layout')
+def configure_layout():
+    return render_template('configure_layout.html')
+
+
 if __name__ == '__main__':
     app.run()
