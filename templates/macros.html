@@ -62,9 +62,11 @@
     </nav>
 {% endmacro %}
 
-{% macro importJS(particles=False) %}
+{% macro importJS(particles=False, gridster=False) %}
     <script type="text/javascript" src="/static/js/main.js"></script>
     {% if particles %}
         <script type="text/javascript" src="/static/js/particles.min.js"></script>
+    {% elif gridster %}
+        <script type="text/javascript" src="/static/gridster.js/dist/jquery.dsmorse-gridster.min.js"></script>
     {% endif %}
 {% endmacro %}
