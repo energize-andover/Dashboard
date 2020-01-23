@@ -32,3 +32,9 @@
         font-size: 1.5rem !important; /* Equivalent to are-large */
     }
 }
+
+/***** GRIDSTER *****/
+.gridster ul li {
+    background-color: blue !important;
+}
+

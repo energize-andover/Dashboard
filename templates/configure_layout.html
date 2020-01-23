@@ -1,6 +1,6 @@
 {% from 'macros.html' import head, header, importJS %}
 
-{{ head('Configure Layout') }}
+{{ head('Configure Layout', extra_css_imports=['/static/css/configure.css'], gridster=True) }}
 
 <body>
 {{ header() }}
@@ -21,20 +21,33 @@
                 </div>
 
                 <div class="control">
-                    <button class="button is-medium colored-button" id="submit" style="border-radius: 0 10px 10px 0;">Submit</button>
+                    <button class="button is-medium colored-button" id="submit" style="border-radius: 0 10px 10px 0;">
+                        Submit
+                    </button>
                 </div>
             </div>
             <h6 class="is-size-6-mobile is-hidden is-size-5" id="error-message"></h6>
 
             <br>
 
-            <h6 class="is-size-6-mobile is-size-5"><a href="/" title="Return to dashboard">Discard and return to dashboard</a></h6>
+            <h6 class="is-size-6-mobile is-size-5"><a href="/" title="Return to dashboard">Discard and return to
+                dashboard</a></h6>
         </div>
     </section>
-    <section class="section has-text-centered">
+    <section class="content section has-text-centered" style="padding-bottom: 0;">
         <h1 class="title is-size-1 is-size-3-mobile">Configure widget layout</h1>
         <h2 class="subtitle is-size-5 is-size-6-mobile">The following represents your dashboard, and the dashed
             rectangles are widgets. </h2>
+    </section>
+    <section id="gridster-section" style="width: 80%; margin: 0 auto; outline: black solid 8px;">
+        <div class="gridster" style="height: 448.647px;">
+            <ul>
+            </ul>
+        </div>
+    </section>
+    <br>
+    <section class="content section has-text-centered" style="padding-bottom: 0;">
+        <h2 class="subtitle is-size-5 is-size-6-mobile"><a href="/">Cancel and return to dashboard</a></h2>
     </section>
 </main>
 {{ importJS() }}

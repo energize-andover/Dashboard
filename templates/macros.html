@@ -1,4 +1,4 @@
-{% macro head(title, extra_css_imports=null, use_navigation_css=True) %}
+{% macro head(title, extra_css_imports=null, use_navigation_css=True, gridster=False) %}
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -44,6 +44,11 @@
         </script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
                 integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+
+        {% if gridster %}
+            <link rel="stylesheet" type="text/css" href="/static/gridster.js/dist/jquery.dsmorse-gridster.min.css">
+            <script src="/static/gridster.js/dist/jquery.dsmorse-gridster.min.js" type="text/javascript" charset="utf-8"></script>
+        {% endif %}
     </head>
 {% endmacro %}
 
@@ -62,11 +67,9 @@
     </nav>
 {% endmacro %}
 
-{% macro importJS(particles=False, gridster=False) %}
+{% macro importJS(particles=False) %}
     <script type="text/javascript" src="/static/js/main.js"></script>
     {% if particles %}
         <script type="text/javascript" src="/static/js/particles.min.js"></script>
-    {% elif gridster %}
-        <script type="text/javascript" src="/static/gridster.js/dist/jquery.dsmorse-gridster.min.js"></script>
     {% endif %}
 {% endmacro %}
