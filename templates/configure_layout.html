@@ -1,55 +1,78 @@
-{% from 'macros.html' import head, header, importJS %}
-
-{{ head('Configure Layout', extra_css_imports=['/static/css/configure.css'], gridster=True) }}
-
-<body>
-{{ header() }}
+{#{% from 'macros.html' import head, header, importJS %}#}
+{##}
+{#{{ head('Configure Layout') }}#}
+{##}
+{#<body>#}
+{#{{ header() }}#}
+{#<main>#}
+{#    <section class="has-background-white" id="overlay">#}
+{#        <div class="has-text-centered" id="overlay-content"#}
+{#             style="top: 100%; left: 0; right: 0; position: fixed; transition: 0.5s all ease-out;">#}
+{#            <h1 class="title is-size-3-mobile is-size-1">First things first</h1>#}
+{#            <h2 class="subtitle is-size-5-mobile is-size-3">How many rows should there be on your dashboard?</h2>#}
+{##}
+{#            <div class="field has-addons" style="max-width: 300px; margin: 0 auto;">#}
+{#                <div class="control has-icons-left">#}
+{#                    <input class="input is-medium colored" type="number" placeholder="Enter here..." id="row-input"#}
+{#                           style="border-radius: 10px 0 0 10px;">#}
+{#                    <span class="icon is-small is-left">#}
+{#                        <i class="fas fa-th"></i>#}
+{#                    </span>#}
+{#                </div>#}
+{##}
+{#                <div class="control">#}
+{#                    <button class="button is-medium colored-button" id="submit" style="border-radius: 0 10px 10px 0;">Submit</button>#}
+{#                </div>#}
+{#            </div>#}
+{#            <h6 class="is-size-6-mobile is-hidden is-size-5" id="error-message"></h6>#}
+{##}
+{#            <br>#}
+{##}
+{#            <h6 class="is-size-6-mobile is-size-5"><a href="/" title="Return to dashboard">Discard and return to dashboard</a></h6>#}
+{#        </div>#}
+{#    </section>#}
+{#    <section class="section has-text-centered">#}
+{#        <h1 class="title is-size-1 is-size-3-mobile">Configure widget layout</h1>#}
+{#        <h2 class="subtitle is-size-5 is-size-6-mobile">The following represents your dashboard, and the dashed#}
+{#            rectangles are widgets. </h2>#}
+{#    </section>#}
+{#</main>#}
+{#{{ importJS() }}#}
+{#<script type="text/javascript" src="/static/js/configuration/configure_layout.js"></script>#}
+{#</body>#}
+<html>
+<head>
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dsmorse-gridster@0.8.0/dist/jquery.dsmorse-gridster.min.js"></script>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/dsmorse-gridster@0.8.0/dist/jquery.dsmorse-gridster.min.css">
+    {#    <script src="/static/gridster.js-0.5.6/dist/jquery.gridster.min.js"></script>#}
+    {#    <link rel="stylesheet" href="/static/gridster.js-0.5.6/dist/jquery.gridster.min.css">#}
+</head>
 <main>
-    <section class="has-background-white" id="overlay">
-        <div class="has-text-centered" id="overlay-content"
-             style="top: 100%; left: 0; right: 0; position: fixed; transition: 0.5s all ease-out;">
-            <h1 class="title is-size-3-mobile is-size-1">First things first</h1>
-            <h2 class="subtitle is-size-5-mobile is-size-3">How many rows should there be on your dashboard?</h2>
+    <div>
+        <div class="gridster-border">
+            <div class="gridster">
+                <ul>
+                    <li data-row="1" data-col="1" data-sizex="2" data-sizey="2"></li>
+                    <li data-row="2" data-col="1" data-sizex="2" data-sizey="2"></li>
 
-            <div class="field has-addons" style="max-width: 300px; margin: 0 auto;">
-                <div class="control has-icons-left">
-                    <input class="input is-medium colored" type="number" placeholder="Enter here..." id="row-input"
-                           style="border-radius: 10px 0 0 10px;">
-                    <span class="icon is-small is-left">
-                        <i class="fas fa-th"></i>
-                    </span>
-                </div>
+                    <li data-row="1" data-col="3" data-sizex="2" data-sizey="2"></li>
+                    <li data-row="2" data-col="3" data-sizex="2" data-sizey="2"></li>
 
-                <div class="control">
-                    <button class="button is-medium colored-button" id="submit" style="border-radius: 0 10px 10px 0;">
-                        Submit
-                    </button>
-                </div>
+                </ul>
             </div>
-            <h6 class="is-size-6-mobile is-hidden is-size-5" id="error-message"></h6>
-
-            <br>
-
-            <h6 class="is-size-6-mobile is-size-5"><a href="/" title="Return to dashboard">Discard and return to
-                dashboard</a></h6>
         </div>
-    </section>
-    <section class="content section has-text-centered" style="padding-bottom: 0;">
-        <h1 class="title is-size-1 is-size-3-mobile">Configure widget layout</h1>
-        <h2 class="subtitle is-size-5 is-size-6-mobile">The following represents your dashboard, and the dashed
-            rectangles are widgets. </h2>
-    </section>
-    <section id="gridster-section" style="width: 80%; margin: 0 auto; outline: black solid 8px;">
-        <div class="gridster" style="height: 448.647px;">
-            <ul>
-            </ul>
-        </div>
-    </section>
-    <br>
-    <section class="content section has-text-centered" style="padding-bottom: 0;">
-        <h2 class="subtitle is-size-5 is-size-6-mobile"><a href="/">Cancel and return to dashboard</a></h2>
-    </section>
+    </div>
+    <style>
+        li {
+            border: 1px solid black;
+            list-style: none;
+        }
+    </style>
+    <script src="/static/js/configuration/configure_layout.js"></script>
 </main>
-{{ importJS() }}
-<script type="text/javascript" src="/static/js/configuration/configure_layout.js"></script>
-</body>
+</html>
