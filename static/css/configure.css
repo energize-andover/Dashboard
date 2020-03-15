@@ -35,6 +35,39 @@
 
 /***** GRIDSTER *****/
 .gridster ul li {
-    background-color: blue !important;
+    border: 2px dashed black;
+    list-style: none;
 }
 
+.gridster-border {
+    margin: 0 auto;
+    border: 1px solid black;
+    overflow: hidden;
+}
+
+.gs-resize-handle-both {
+    /* A changed version of gridster's default draggable arrow that is black instead of gray */
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAABhGlDQ1BJQ0MgcHJvZmlsZQAAKJF9kT1Iw0AcxV9bpSJVBzOIdMhQnSyISnHUKhShQqgVWnUwufQLmhiSFBdHwbXg4Mdi1cHFWVcHV0EQ/ABxcnRSdJES/5cUWsR4cNyPd/ced++AYKPKNKtrHNB028ykkmIuvyKGXxFCPwREkZCZZcxKUhq+4+seAb7exXmW/7k/R59asBgQEIlnmGHaxOvEiU3b4LxPLLCyrBKfE4+ZdEHiR64rHr9xLrkc5JmCmc3MEQvEYqmDlQ5mZVMjniKOqZpO+cGcxyrnLc5atcZa9+QvjBT05SWu04wihQUsQoIIBTVUUIWNOK06KRYytJ/08Q+7folcCrkqYOSYxwY0yK4f/A9+d2sVJye8pEgS6H5xnI8RILwLNOuO833sOM0TIPQMXOlt/0YDmP4kvd7WYkfAwDZwcd3WlD3gcgcYejJkU3alEM1gsQi8n9E35YHBW6B31euttY/TByBLXaVvgINDYLRE2Ws+7+7p7O3fM63+fgCTLnK0SJx5TQAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAAN1wAADdcBQiibeAAAAAd0SU1FB+QDDhQhIEqgwFAAAAChSURBVAgdAZYAaf8BAAAAAAAAAAAAAAAAAAAAAAAAAP8AAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAP8AAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACzOAIJx8yFfgAAAABJRU5ErkJggg==') !important;
+}
+
+.gridster {
+    background-image: url("/static/img/bg.png");
+    height: 100%;
+}
+
+.btn-cell-delete {
+    width: 20px;
+    height: 20px;
+    top: 8px;
+    left: 8px;
+    z-index: 20;
+    display: block;
+    position: absolute;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.gs-w:hover .btn-cell-delete {
+    opacity: 1;
+    visibility: visible;
+}

@@ -1,49 +1,11 @@
-let overlay = $('#overlay'), layout, gridster, gridster_list = $(".gridster ul");
+let layout, gridster, gridster_list = $(".gridster ul");
 const maxRows = 4, maxCols = 4, widgetBaseDimension = [100, 100];
 
-// waitForFontAwesome(() => {
-//     $('#overlay-content').css({
-//         'top': '50%',
-//         'transform': 'translateY(-50%)'
-//     });
-// });
-//
-// if (window.localStorage.getItem('currentLayout') !== null) {
-//     layout = WidgetLayout.fromString(window.localStorage.getItem('currentLayout'));
-//
-//     // Hide the overlay
-// }
-//
-// let button = $('#submit');
-//
-// button.click(() => {
-//     let input = $('#row-input'), chosenNum = input.val(), errorMessage = $('#error-message'), field = $('.field');
-//
-//     if (isNaN(chosenNum) || chosenNum <= 0 || chosenNum > 2) {
-//         errorMessage.html('Please enter a whole number that is no more than 2!');
-//         errorMessage.removeClass('is-hidden');
-//         input.removeClass('colored');
-//         input.addClass('is-danger');
-//         button.removeClass('colored-button');
-//         button.addClass('is-danger');
-//         if (!field.is(':animated'))
-//             field.effect('shake');
-//
-//         input.focus();
-//     } else {
-//         let colData = [];
-//
-//         for (let i = 0; i < chosenNum; i++)
-//             colData.push(2);
-//
-//         layout = new WidgetLayout(colData);
-//         window.localStorage.setItem('currentLayout', layout.toString());
-//
-//         overlay.fadeOut()
-//     }
-// });P4$$w
+waitForFontAwesome(() => {
+    initGridster();
+});
 
-$(() => {
+function initGridster() {
     gridster = gridster_list.gridster({
         widget_base_dimensions: widgetBaseDimension,
         widget_margins: [5, 5],
@@ -63,8 +25,18 @@ $(() => {
         }
     }).data('gridster');
 
-    $('.gridster-border').css('width', `${widgetBaseDimension[1] * maxRows + (maxRows + 1) * 5}px`)
-});
+    let border = $('.gridster-border');
+    border.css('width', `${widgetBaseDimension[1] * maxRows + (maxRows + 1) * 5}px`);
+
+    // Stopping the grid from expanding past the 4x4 dimensions or collapsing when items are removed
+    let borderMaxHeight = border.first().outerHeight();
+    border.css('height', `${borderMaxHeight}px`);
+
+    gridster_list.children('li').each((index, li) => {
+
+        $(li).append('<span class="btn-cell-delete"><a class="delete" onclick="deleteCell(this)" href="javascript:void(0);"></a></span>');
+    });
+}
 
 // Resizes or removes gridster elements as needed so the grid does not exceed maxRows x maxCols
 function enforceBounds() {
@@ -107,10 +79,14 @@ function enforceBounds() {
                     else
                         gridState[i][j] = true;
     });
+
+    if (canAddItem()[0])
+        $('#addition-error-msg').css('display', 'none');
 }
 
 function removeGridsterItem(item) {
     gridster.remove_widget(item);
+    $('#addition-error-msg').css('display', 'none');
 }
 
 // Returns true if there is an empty space in the grid, and the row and column of the first empty space if there is one
@@ -162,8 +138,14 @@ function addGridsterItem() {
 
         // Validate that x and y are in bounds
         if (x <= maxRows && y <= maxCols) {
-            console.log(x, y);
             gridster.add_widget('<li></li>', 1, 1, y, x);
-        }
-    }
+            $('#addition-error-msg').css('display', 'none');
+        } else
+            $('#addition-error-msg').css('display', 'block');
+    } else
+        $('#addition-error-msg').css('display', 'block');
+}
+
+function deleteCell(btn) {
+    removeGridsterItem($(btn).parents('span').first().parents('li').first());
 }
