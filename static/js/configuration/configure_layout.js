@@ -6,6 +6,11 @@ waitForFontAwesome(() => {
 });
 
 function initGridster() {
+    // Generate default 2 x 2 layout
+    for (let col = 1; col <= 3; col += 2)
+        for (let row = 1; row <= 2; row++)
+            gridster_list.append(`<li data-row="${row}" data-col="${col}" data-sizex="2" data-sizey="2"></li>`);
+
     gridster = gridster_list.gridster({
         widget_base_dimensions: widgetBaseDimension,
         widget_margins: [5, 5],
@@ -25,6 +30,50 @@ function initGridster() {
         }
     }).data('gridster');
 
+    configureGridster();
+
+    if (window.localStorage.getItem("EA_Dashboard_Layout") !== null) {
+        $.ajax({
+            url: '/api/decrypt',
+            data: JSON.stringify({data: window.localStorage.getItem("EA_Dashboard_Layout")}),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            type: 'POST',
+            success: (response) => {
+                let serialization = JSON.parse(response['payload']), numCells = Object.keys(serialization).length;
+
+                // sort serialization
+                serialization = Gridster.sort_by_row_and_col_asc(serialization);
+
+                gridster.remove_all_widgets();
+
+                $.each(serialization, function () {
+                    gridster.add_widget('<li />', this.size_x, this.size_y, this.col, this.row).promise().done(configureGridster());
+                });
+
+                let overlayClearInterval = setInterval(() => {
+                    if ($('.btn-cell-delete').length === numCells) {
+                        hideOverlay();
+                        clearInterval(overlayClearInterval);
+                    }
+                }, 100);
+            },
+            error: () => {
+                hideOverlay();
+            }
+        })
+    } else
+        hideOverlay();
+}
+
+function hideOverlay() {
+    $('#overlay').css('opacity', '0');
+    setTimeout(() => {
+        $('#overlay').css('visibility', 'hidden');
+    }, 500);
+}
+
+function configureGridster() {
     let border = $('.gridster-border');
     border.css('width', `${widgetBaseDimension[1] * maxRows + (maxRows + 1) * 5}px`);
 
@@ -33,8 +82,10 @@ function initGridster() {
     border.css('height', `${borderMaxHeight}px`);
 
     gridster_list.children('li').each((index, li) => {
-
-        $(li).append('<span class="btn-cell-delete"><a class="delete" onclick="deleteCell(this)" href="javascript:void(0);"></a></span>');
+        if ($(li).data('data-has-delete') == null) {
+            $(li).append('<span class="btn-cell-delete"><a class="delete" onclick="deleteCell(this)" href="javascript:void(0);"></a></span>');
+            $(li).data('data-has-delete', 'true')
+        }
     });
 }
 
@@ -139,6 +190,7 @@ function addGridsterItem() {
         // Validate that x and y are in bounds
         if (x <= maxRows && y <= maxCols) {
             gridster.add_widget('<li></li>', 1, 1, y, x);
+            configureGridster();
             $('#addition-error-msg').css('display', 'none');
         } else
             $('#addition-error-msg').css('display', 'block');
@@ -148,4 +200,30 @@ function addGridsterItem() {
 
 function deleteCell(btn) {
     removeGridsterItem($(btn).parents('span').first().parents('li').first());
+}
+
+function saveLayout() {
+    $('#btn-save').addClass('is-loading');
+
+    $.ajax({
+        url: '/api/encrypt',
+        data: JSON.stringify({data: gridster.serialize()}),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        type: 'POST',
+        success: (response) => {
+            let payload = response['payload'];
+            if (payload !== null && payload.length > 0) {
+                $('#submission-error-msg').css('display', 'none');
+                window.localStorage.setItem('EA_Dashboard_Layout', payload);
+                window.location.href = "/configure"
+            }
+        },
+        error: () => {
+            $('#submission-error-msg').css('display', 'block');
+        },
+        complete: () => {
+            $('#btn-save').removeClass('is-loading');
+        }
+    });
 }

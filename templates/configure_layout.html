@@ -5,23 +5,24 @@
 <body>
 {{ header() }}
 <main>
+    <section id="overlay" style="transition: opacity {{ transition_color }};">
+        <div class="overlay-content-centered">
+            <!--A large, black spinning Bulma loader (a button in which everything is hidden except the loading icon)-->
+            <button class="button is-warning is-loading"
+                    style="font-size: 3rem; background-color: rgba(0, 0, 0, 0); border: none; margin: 0 auto; display: block"></button>
+            <p class="subtitle is-size-3 is-centered" style="margin-top: -1rem;">Loading...</p>
+        </div>
+    </section>
     <section class="section has-text-centered">
         <h1 class="title is-size-1 is-size-3-mobile">Configure widget layout</h1>
-        <h2 class="subtitle is-size-5 is-size-6-mobile">The following represents your dashboard, and the dashed
-            rectangles are widgets. Add, remove, and resize widgets as you please to design the <strong>layout</strong>
+        <h2 class="subtitle is-size-5 is-size-6-mobile" style="max-width: 60%; margin: 0 auto;">The following represents
+            your dashboard, and the dashed rectangles are widgets. Add, remove, and resize widgets as you please to design the <strong>layout</strong>
             of your dashboard.</h2>
 
-        <div style="margin-bottom: 1.5rem;">
+        <div style="margin: 1rem 0 1.5rem;">
             <div class="gridster-border">
                 <div class="gridster">
-                    <ul>
-                        <li data-row="1" data-col="1" data-sizex="2" data-sizey="2"></li>
-                        <li data-row="2" data-col="1" data-sizex="2" data-sizey="2"></li>
-
-                        <li data-row="1" data-col="3" data-sizex="2" data-sizey="2"></li>
-                        <li data-row="2" data-col="3" data-sizex="2" data-sizey="2"></li>
-
-                    </ul>
+                    <ul></ul>
                 </div>
             </div>
         </div>
@@ -33,20 +34,24 @@
             </button>
         </div>
 
-        <p class="subtitle" id="addition-error-msg" style="display: none;">Your dashboard is already full!<br>Try resizing or removing widgets to make space
+        <p class="subtitle" id="addition-error-msg" style="display: none;">Your dashboard is already full!<br>Try
+            resizing or removing widgets to make space
             for more!</p>
 
 
-        <div class="buttons is-centered">
-            <button class="button is-danger">
+        <div class="buttons is-centered" id="btn-discard">
+            <button class="button is-danger" onclick="window.location.href = '/configure'">
                 <span class="icon is-small"><i class="fas fa-trash"></i></span>
                 <span>Discard Changes</span>
             </button>
-            <button class="button is-success">
+            <button class="button is-success" id="btn-save" onclick="saveLayout()">
                 <span class="icon is-small"><i class="fas fa-save"></i></span>
                 <span>Save Changes</span>
             </button>
         </div>
+
+        <p class="subtitle" id="submission-error-msg" style="display: none;">Sorry, but something went wrong! Please try
+            again!</p>
     </section>
 </main>
 </body>
