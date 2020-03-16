@@ -7,9 +7,13 @@ waitForFontAwesome(() => {
 
 function initGridster() {
     // Generate default 2 x 2 layout
-    for (let col = 1; col <= 3; col += 2)
-        for (let row = 1; row <= 2; row++)
-            gridster_list.append(`<li data-row="${row}" data-col="${col}" data-sizex="2" data-sizey="2"></li>`);
+    let currentID = 0; // Used to keep track of the current ID of the cell. IDs start from 0 and increment row-wise
+
+    for (let row = 1; row <= 2; row++)
+        for (let col = 1; col <= 3; col += 2) {
+            gridster_list.append(`<li id="cell-id-${currentID}" data-row="${row}" data-col="${col}" data-sizex="2" data-sizey="2"></li>`);
+            currentID++;
+        }
 
     gridster = gridster_list.gridster({
         widget_base_dimensions: widgetBaseDimension,
@@ -41,8 +45,8 @@ function initGridster() {
 
                 gridster.remove_all_widgets();
 
-                $.each(serialization, function () {
-                    gridster.add_widget('<li />', this.size_x, this.size_y, this.col, this.row).promise().done(configureGridster());
+                $.each(serialization, function (index) {
+                    gridster.add_widget(`<li id="cell-${index}"></li>`, this.size_x, this.size_y, this.col, this.row).promise().done(configureGridster());
                 });
 
                 let overlayClearInterval = setInterval(() => {
