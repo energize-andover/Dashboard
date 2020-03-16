@@ -1,4 +1,4 @@
-{% macro head(title, extra_css_imports=null, use_navigation_css=True, gridster=False) %}
+{% macro head(title, extra_css_imports=null, use_navigation_css=True, gridster=False, plotly=False) %}
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -50,6 +50,9 @@
             <link rel="stylesheet"
                   href="https://cdn.jsdelivr.net/npm/dsmorse-gridster@0.8.0/dist/jquery.dsmorse-gridster.min.css">
         {% endif %}
+        {% if plotly %}
+            <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        {% endif %}
     </head>
 {% endmacro %}
 
@@ -73,4 +76,23 @@
     {% if particles %}
         <script type="text/javascript" src="/static/js/particles.min.js"></script>
     {% endif %}
+{% endmacro %}
+
+{% macro loading_overlay() %}
+    <section id="overlay" style="transition: opacity {{ transition_color }};">
+        <div class="overlay-content-centered">
+            <!--A large, black spinning Bulma loader (a button in which everything is hidden except the loading icon)-->
+            <button class="button is-warning is-loading"
+                    style="font-size: 3rem; background-color: rgba(0, 0, 0, 0); border: none; margin: 0 auto; display: block"></button>
+            <p class="subtitle is-size-3 is-centered" style="margin-top: -1rem;">Loading...</p>
+        </div>
+        <script type="text/javascript">
+            function hideOverlay() {
+                $('#overlay').css('opacity', '0');
+                setTimeout(() => {
+                    $('#overlay').css('visibility', 'hidden');
+                }, 500);
+            }
+        </script>
+    </section>
 {% endmacro %}

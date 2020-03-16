@@ -1,11 +1,22 @@
-{% from 'macros.html' import head, header, importJS %}
+{% from 'macros.html' import head, header, importJS, loading_overlay %}
 
-{{ head('Your Dashboard') }}
+{{ head('Your Dashboard', extra_css_imports=['/static/css/dashboard.css'], gridster=True, plotly=True) }}
 
 <body>
-    {{ header() }}
-    <main>
-
-    </main>
-    {{ importJS() }}
+{{ header() }}
+<main>
+    {{ loading_overlay() }}
+    <div>
+        <div class="gridster-border">
+            <div class="gridster">
+                <ul></ul>
+            </div>
+        </div>
+    </div>
+</main>
+<footer>
+    <h1>Hi</h1>
+</footer>
+{{ importJS() }}
+<script type="text/javascript" src="/static/js/dashboard.js"></script>
 </body>

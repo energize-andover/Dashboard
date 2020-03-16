@@ -1,17 +1,17 @@
 {% from 'macros.html' import head, header, importJS, loading_overlay %}
 
-{{ head('Configure Layout', extra_css_imports=['/static/css/configure.css'], gridster=True) }}
+{{ head('Configure Widgets', extra_css_imports=['/static/css/configure.css'], gridster=True) }}
 
 <body>
 {{ header() }}
 <main>
     {{ loading_overlay() }}
     <section class="section has-text-centered">
-        <h1 class="title is-size-1 is-size-3-mobile">Configure widget layout</h1>
+        <h1 class="title is-size-1 is-size-3-mobile">Configure widgets</h1>
         <h2 class="subtitle is-size-5 is-size-6-mobile" style="max-width: 60%; margin: 0 auto;">The following represents
-            your dashboard, and the dashed rectangles are widgets. Add, remove, and resize widgets as you please to
-            design the <strong>layout</strong>
-            of your dashboard.</h2>
+            your dashboard, and the dashed rectangles are widgets. Select a rectangle to change the
+            <strong>widget</strong>
+            inside of it.</h2>
 
         <style>
             @media only screen and (min-width: 1340px) {
@@ -28,18 +28,6 @@
                 </div>
             </div>
         </div>
-
-        <div class="buttons is-centered">
-            <button class="button is-info" onclick="addGridsterItem()">
-                <span class="icon is-small"><i class="fas fa-plus"></i></span>
-                <span>Add Widget</span>
-            </button>
-        </div>
-
-        <p class="subtitle" id="addition-error-msg" style="display: none;">Your dashboard is already full!<br>Try
-            resizing or removing widgets to make space
-            for more!</p>
-
 
         <div class="buttons is-centered" id="btn-discard">
             <button class="button is-danger" onclick="window.location.href = '/configure'">
@@ -58,6 +46,6 @@
 </main>
 </body>
 {{ importJS() }}
-<script type="text/javascript" src="/static/js/configuration/configure_layout.js"></script>
+<script type="text/javascript" src="/static/js/configuration/configure_widgets.js"></script>
 <html>
 

@@ -1,4 +1,4 @@
-let layout, gridster, gridster_list = $(".gridster ul");
+let layout, gridster, gridster_list = $(".gridster ul"), deletionEnabled = true;
 const maxRows = 4, maxCols = 4, widgetBaseDimension = [100, 100];
 
 waitForFontAwesome(() => {
@@ -40,23 +40,28 @@ function initGridster() {
             dataType: 'json',
             type: 'POST',
             success: (response) => {
-                let serialization = JSON.parse(response['payload']), numCells = Object.keys(serialization).length;
+                try {
+                    let serialization = JSON.parse(response['payload']), numCells = Object.keys(serialization).length;
 
-                // sort serialization
-                serialization = Gridster.sort_by_row_and_col_asc(serialization);
+                    // sort serialization
+                    serialization = Gridster.sort_by_row_and_col_asc(serialization);
 
-                gridster.remove_all_widgets();
+                    gridster.remove_all_widgets();
 
-                $.each(serialization, function () {
-                    gridster.add_widget('<li />', this.size_x, this.size_y, this.col, this.row).promise().done(configureGridster());
-                });
+                    $.each(serialization, function () {
+                        gridster.add_widget('<li />', this.size_x, this.size_y, this.col, this.row).promise().done(configureGridster());
+                    });
 
-                let overlayClearInterval = setInterval(() => {
-                    if ($('.btn-cell-delete').length === numCells) {
-                        hideOverlay();
-                        clearInterval(overlayClearInterval);
-                    }
-                }, 100);
+                    let overlayClearInterval = setInterval(() => {
+                        if ($('.btn-cell-delete').length === numCells) {
+                            hideOverlay();
+                            clearInterval(overlayClearInterval);
+                        }
+                    }, 100);
+                } catch (error) {
+                    window.localStorage.clear();
+                    hideOverlay();
+                }
             },
             error: () => {
                 hideOverlay();
@@ -64,13 +69,6 @@ function initGridster() {
         })
     } else
         hideOverlay();
-}
-
-function hideOverlay() {
-    $('#overlay').css('opacity', '0');
-    setTimeout(() => {
-        $('#overlay').css('visibility', 'hidden');
-    }, 500);
 }
 
 function configureGridster() {
@@ -136,8 +134,10 @@ function enforceBounds() {
 }
 
 function removeGridsterItem(item) {
-    gridster.remove_widget(item);
-    $('#addition-error-msg').css('display', 'none');
+    if (deletionEnabled) {
+        gridster.remove_widget(item);
+        $('#addition-error-msg').css('display', 'none');
+    }
 }
 
 // Returns true if there is an empty space in the grid, and the row and column of the first empty space if there is one
@@ -204,6 +204,12 @@ function deleteCell(btn) {
 
 function saveLayout() {
     $('#btn-save').addClass('is-loading');
+    $('button').prop('disabled', true);
+
+    gridster.disable();
+    gridster.disable_resize();
+
+    deletionEnabled = false;
 
     $.ajax({
         url: '/api/encrypt',
@@ -224,6 +230,9 @@ function saveLayout() {
         },
         complete: () => {
             $('#btn-save').removeClass('is-loading');
+            gridster.enable();
+            gridster.enable_resize();
+            deletionEnabled = true;
         }
     });
 }
