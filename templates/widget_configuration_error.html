@@ -1,0 +1,22 @@
+{% from 'macros.html' import head, importJS %}
+
+{{ head('Error 500!', extra_css_imports=['/static/css/error_page.css'], use_navigation_css=False) }}
+
+<body>
+<main class="has-text-centered">
+    <div style="position: fixed; top: 50%; transform: translateY(-50%);left: 0; right: 0;">
+        <div class="error-page">
+            <div>
+                <h1 data-h1="500">500</h1>
+                <p data-p="Error retrieving widget specifications file.">
+                    Error retrieving widget specifications file. Please try again later.
+                </p>
+            </div>
+        </div>
+        <div id="particles-js"></div>
+    </div>
+    <p></p>
+    <a href="/" class="subtitle is-size-4 is-size-5-mobile">Return to dashboard?</a>
+</main>
+{{ importJS(particles=True) }}
+</body>

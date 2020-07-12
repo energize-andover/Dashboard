@@ -17,3 +17,4 @@ def route_templates(app):
     @app.route('/configure/widgets')
     def configure_widgets():
         return render_template('configure_widgets.html')
+

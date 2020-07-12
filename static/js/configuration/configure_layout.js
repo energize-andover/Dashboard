@@ -54,6 +54,7 @@ function initGridster() {
 
                     let overlayClearInterval = setInterval(() => {
                         if ($('.btn-cell-delete').length === numCells) {
+                            enforceBounds();
                             hideOverlay();
                             clearInterval(overlayClearInterval);
                         }
@@ -205,6 +206,8 @@ function deleteCell(btn) {
 function saveLayout() {
     $('#btn-save').addClass('is-loading');
     $('button').prop('disabled', true);
+
+    enforceBounds();
 
     gridster.disable();
     gridster.disable_resize();

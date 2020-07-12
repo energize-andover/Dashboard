@@ -1,5 +1,5 @@
 let gridster, gridster_list = $(".gridster ul"), widgetBaseDimension;
-const navbarHeight = 64, maxRows = 4, maxCols = 4, widgetMargins = [15, 15];
+const navbarHeight = 64, maxRows = 4, maxCols = 4, widgetMargins = [10, 10];
 
 // Calculate the widgetBaseDimension
 let availableVerticalSpace = $(window).height() - navbarHeight - $('footer').height() - 2 * 16 - maxRows * widgetMargins[0];
@@ -10,7 +10,9 @@ availableVerticalSpace -= parseFloat(borderWidth.substring(0, borderWidth.length
 let widgetHeight = Math.floor(availableVerticalSpace / maxRows);
 widgetBaseDimension = [widgetHeight, widgetHeight]; // 1 x 1 widgets should be squares
 
-waitForFontAwesome(initGridster);
+waitForFontAwesome(() => {
+    initGridster();
+});
 
 function initGridster() {
     // Generate default 2 x 2 layout
@@ -58,17 +60,21 @@ function initGridster() {
 
                 let overlayClearInterval = setInterval(() => {
                     if ($('li.gs-w').length === numCells) {
+                        initPlotly();
                         hideOverlay();
                         clearInterval(overlayClearInterval);
                     }
                 }, 100);
             },
             error: () => {
+                initPlotly();
                 hideOverlay();
             }
         })
-    } else
+    } else {
+        initPlotly();
         hideOverlay();
+    }
 }
 
 function configureGridster() {
@@ -80,3 +86,26 @@ function configureGridster() {
     border.css('height', `${borderMaxHeight}px`);
 }
 
+function initPlotly() {
+
+    $('li.box').each((index, cell) => {
+        let width = $(cell).width(), height = $(cell).height();
+
+        Plotly.newPlot(cell, [{
+            x: [1, 2, 3, 4, 5],
+            y: [1, 2, 4, 8, 16],
+            type: 'lines'
+        }], {
+            autosize: false,
+            width: width,
+            height: height,
+            margin: {t: 0},
+            dragmode: 'pan'
+        }, {
+            responsive: true,
+            modeBarButtonsToRemove: ['toImage', 'lasso2d', 'select2d', 'zoom2d', 'autoScale2d', 'toggleSpikelines', 'hoverClosestCartesian', 'hoverCompareCartesian', 'pan2d'],
+            displaylogo: false,
+            scrollZoom: true
+        });
+    });
+}
